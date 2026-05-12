@@ -42,17 +42,17 @@ textarea:focus{outline:none;border-color:#1A3A6B}
 .btnP{background:#1A3A6B;color:#fff}
 .btnP:disabled{background:#aaa}
 .btnS{background:#f4f4f2;color:#1a1a1a;border:1px solid #ccc}
-.btnG{background:#27ae60;color:#fff}
 .row2{display:flex;gap:8px}
 .row2 .btn{flex:1}
+.addtrip{display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#1A3A6B;border:2px dashed #1A3A6B;border-radius:8px;padding:10px;font-size:14px;font-weight:600;cursor:pointer;width:100%;margin-top:8px}
 .sf{display:none;margin-top:8px;padding:10px;background:#f4f4f2;border-radius:8px;border-left:3px solid #1A3A6B}
 .div{border-top:1px solid #dde3ee;padding-top:12px;margin-top:4px}
 .tc{background:#f8f9fc;border:1px solid #dde3ee;border-radius:10px;padding:12px;margin-bottom:8px;position:relative}
 .tcn{font-size:11px;font-weight:700;color:#1A3A6B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
 .rmv{position:absolute;top:8px;right:8px;background:none;border:none;color:#bbb;font-size:18px;cursor:pointer}
 .mirow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.rg{display:flex;flex-direction:column;gap:6px}
-.ro{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #dde3ee;border-radius:8px;cursor:pointer;font-size:14px;background:#fff}
+.rg{display:flex;gap:8px}
+.ro{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;border:1px solid #dde3ee;border-radius:8px;cursor:pointer;font-size:14px;background:#fff}
 .ro.on{background:#E8EDF5;border-color:#1A3A6B;font-weight:600;color:#0d2545}
 .ro input{accent-color:#1A3A6B;width:15px;height:15px}
 .tbox{background:#E8EDF5;border-radius:8px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center;margin-top:6px}
@@ -61,10 +61,8 @@ textarea:focus{outline:none;border-color:#1A3A6B}
 .ampm{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
 .ap{padding:9px;border:1px solid #ccc;border-radius:8px;background:#fff;font-size:13px;font-weight:600;cursor:pointer;text-align:center;color:#666}
 .ap.on{background:#1A3A6B;color:#fff;border-color:#1A3A6B}
-.saved-trip{background:#f0f7ff;border:1px solid #b0ccf0;border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
-.saved-trip-info{font-size:13px;color:#0d2545}
-.saved-trip-mi{font-size:12px;color:#1A3A6B;font-weight:700}
-.del-trip{background:none;border:none;color:#bbb;font-size:16px;cursor:pointer}
+.nowork{background:#FAEEDA;border:1px solid #F0C060;border-radius:10px;padding:14px;text-align:center;margin-top:8px}
+.nowork p{font-size:14px;font-weight:600;color:#854F0B}
 .okwrap{text-align:center;padding:2rem 1rem}
 .okicon{width:60px;height:60px;background:#E8EDF5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:28px;color:#1A3A6B}
 .nav{display:flex;gap:8px;margin:12px 0}
@@ -88,7 +86,6 @@ textarea:focus{outline:none;border-color:#1A3A6B}
 .tg{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}
 .tn{background:#2C1654;color:#fff}
 .toff{background:#f4f4f2;color:#888}
-.trips-count{background:#1A3A6B;color:#fff;border-radius:20px;font-size:12px;padding:2px 10px;font-weight:700}
 </style>
 </head>
 <body>
@@ -110,27 +107,23 @@ textarea:focus{outline:none;border-color:#1A3A6B}
     <div class="prog"><div class="progf" id="progf" style="width:33%"></div></div>
   </div>
 
-  <!-- S1: IDENTIFICATION -->
+  <!-- S1 -->
   <div id="s1">
     <div class="card">
       <div class="ct" id="ts1">Identification</div>
       <div class="irow"><span class="il" id="tdrv">Driver</span><span class="iv">Jaime Garcia</span></div>
       <div class="irow"><span class="il" id="tveh">Vehicle</span><span class="iv">Ford F350</span></div>
-      <div class="wbadge">
-        <div class="wt" id="twk">Week</div>
-        <div class="wr" id="wkr">—</div>
+      <div class="wbadge" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px">
+        <button onclick="changeWeek(-1)" style="background:none;border:none;color:#fff;font-size:20px;cursor:pointer;padding:0 6px;line-height:1">&#8249;</button>
+        <div style="text-align:center;flex:1">
+          <div class="wt" id="twk">Week</div>
+          <div class="wr" id="wkr">—</div>
+        </div>
+        <button onclick="changeWeek(1)" style="background:none;border:none;color:#fff;font-size:20px;cursor:pointer;padding:0 6px;line-height:1">&#8250;</button>
       </div>
       <div class="fg">
         <span class="lbl" id="tdaylbl">Select Day</span>
-        <select id="selDay" onchange="onDayChange()">
-          <option value="" id="tdayph">Select day...</option>
-          <option value="0" id="td0">Monday</option>
-          <option value="1" id="td1">Tuesday</option>
-          <option value="2" id="td2">Wednesday</option>
-          <option value="3" id="td3">Thursday</option>
-          <option value="4" id="td4">Friday</option>
-          <option value="5" id="td5">Saturday</option>
-        </select>
+        <div id="dayBtns" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
       </div>
       <div class="irow" id="daterow" style="display:none">
         <span class="il" id="tdtlbl">Date</span>
@@ -140,149 +133,18 @@ textarea:focus{outline:none;border-color:#1A3A6B}
     <button class="btn btnP" id="bn1" onclick="next1()">Continue</button>
   </div>
 
-  <!-- S2: TRIPS -->
+  <!-- S2 -->
   <div id="s2" style="display:none">
     <div class="card">
       <div class="ct" id="ts2">Trip Details</div>
-
-      <!-- Question -->
-      <p style="font-size:14px;font-weight:600;margin-bottom:8px" id="ttrpq">What would you like to record?</p>
+      <p style="font-size:14px;font-weight:600;margin-bottom:8px" id="ttrpq">Did you make any trips today?</p>
       <div class="rg" id="rgtrp">
-        <label class="ro" onclick="selMode(this,'trips')"><input type="radio" name="trp"><span id="ttrpyes">Trips + Timecard</span></label>
-        <label class="ro" onclick="selMode(this,'yardservice')"><input type="radio" name="trp"><span id="ttrptc">Services at Yard</span></label>
-        <label class="ro" onclick="selMode(this,'dayoff')"><input type="radio" name="trp"><span id="ttrpdayoff">Did not work</span></label>
+        <label class="ro" onclick="selTrips(this,'no')"><input type="radio" name="trp"><span id="ttrpno">No</span></label>
+        <label class="ro" onclick="selTrips(this,'yes')"><input type="radio" name="trp"><span id="ttrpyes">Yes</span></label>
       </div>
-      <!-- Day off reason -->
-      <div id="dayoff-area" style="display:none;margin-top:10px">
-        <div class="fg">
-          <span class="lbl" id="tdayoffreason">What was the reason?</span>
-          <textarea id="dayoff-reason" placeholder="e.g. Day off, sick leave, holiday..." style="min-height:80px"></textarea>
-        </div>
-      </div>
-
-      <!-- Saved trips list -->
-      <div id="saved-trips-area" style="display:none;margin-top:12px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <span style="font-size:13px;font-weight:600;color:#0d2545" id="tsavedlbl">Saved Trips</span>
-          <span class="trips-count" id="trips-count">0</span>
-        </div>
-        <div id="saved-trips-list"></div>
-      </div>
-
-      <!-- Trip form -->
-      <div id="trip-form-area" style="display:none;margin-top:12px">
-        <div style="border-top:1px solid #dde3ee;padding-top:12px">
-          <p style="font-size:13px;font-weight:700;color:#1A3A6B;margin-bottom:10px" id="tnewtrip">New Trip</p>
-          <div class="fg">
-            <span class="lbl" id="torg">Origin</span>
-            <select id="trip-org" onchange="chkOth(this,document.getElementById(&quot;sf-org&quot;))">
-              <option value="" id="torgph">Select location...</option>
-              <option value="PO #02000 YARD">PO #02000 YARD</option>
-<option value="PO #21001 NEX">PO #21001 NEX</option>
-<option value="PO #22015 CAPEX">PO #22015 CAPEX</option>
-<option value="PO #22057 RIVERFRONT">PO #22057 RIVERFRONT</option>
-<option value="PO #23005 DENTON I">PO #23005 DENTON I</option>
-<option value="PO #23026 SH 183">PO #23026 SH 183</option>
-<option value="PO #23073 US 59 WEBB CO">PO #23073 US 59 WEBB CO</option>
-<option value="PO #23083 SL 1604">PO #23083 SL 1604</option>
-<option value="PO #24047 IH 30 TARRANT">PO #24047 IH 30 TARRANT</option>
-<option value="PO #24062 IH 35 WACO">PO #24062 IH 35 WACO</option>
-<option value="PO #25025 COLORADO">PO #25025 COLORADO</option>
-<option value="PO #25036 LEWISVILLE DAM">PO #25036 LEWISVILLE DAM</option>
-<option value="PO #25042 DENTON II">PO #25042 DENTON II</option>
-<option value="PO #25043 Culberson">PO #25043 Culberson</option>
-<option value="PO #25046 LIVE OAK">PO #25046 LIVE OAK</option>
-<option value="PO #25090 Indus-IH20">PO #25090 Indus-IH20</option>
-<option value="Other / Otro">Other / Otro</option>
-            </select>
-            <div class="sf" id="sf-org">
-              <span class="lbl" id="torgoth">Specify location</span>
-              <input type="text" id="x-org" placeholder="...">
-            </div>
-          </div>
-          <div class="fg">
-            <span class="lbl" id="tdst">Destination</span>
-            <select id="trip-dst" onchange="chkOth(this,document.getElementById(&quot;sf-dst&quot;))">
-              <option value="" id="tdstph">Select location...</option>
-              <option value="PO #02000 YARD">PO #02000 YARD</option>
-<option value="PO #21001 NEX">PO #21001 NEX</option>
-<option value="PO #22015 CAPEX">PO #22015 CAPEX</option>
-<option value="PO #22057 RIVERFRONT">PO #22057 RIVERFRONT</option>
-<option value="PO #23005 DENTON I">PO #23005 DENTON I</option>
-<option value="PO #23026 SH 183">PO #23026 SH 183</option>
-<option value="PO #23073 US 59 WEBB CO">PO #23073 US 59 WEBB CO</option>
-<option value="PO #23083 SL 1604">PO #23083 SL 1604</option>
-<option value="PO #24047 IH 30 TARRANT">PO #24047 IH 30 TARRANT</option>
-<option value="PO #24062 IH 35 WACO">PO #24062 IH 35 WACO</option>
-<option value="PO #25025 COLORADO">PO #25025 COLORADO</option>
-<option value="PO #25036 LEWISVILLE DAM">PO #25036 LEWISVILLE DAM</option>
-<option value="PO #25042 DENTON II">PO #25042 DENTON II</option>
-<option value="PO #25043 Culberson">PO #25043 Culberson</option>
-<option value="PO #25046 LIVE OAK">PO #25046 LIVE OAK</option>
-<option value="PO #25090 Indus-IH20">PO #25090 Indus-IH20</option>
-<option value="Other / Otro">Other / Otro</option>
-            </select>
-            <div class="sf" id="sf-dst">
-              <span class="lbl" id="tdstoth">Specify location</span>
-              <input type="text" id="x-dst" placeholder="...">
-            </div>
-          </div>
-          <div class="fg">
-            <span class="lbl" id="tcgo">Cargo Type</span>
-            <input type="text" id="trip-cargo" placeholder="e.g. Construction materials">
-          </div>
-          <div class="fg">
-            <span class="lbl" id="tmi">Odometer (miles)</span>
-            <div class="mirow">
-              <div><span class="lbl" style="font-size:12px" id="tmis">Start</span><input type="number" id="mi-start" placeholder="0" oninput="calcMi()"></div>
-              <div><span class="lbl" style="font-size:12px" id="tmie">End</span><input type="number" id="mi-end" placeholder="0" oninput="calcMi()"></div>
-            </div>
-            <div class="tbox"><span class="tl" id="tmit">Total</span><span class="tv" id="mi-total">0 mi</span></div>
-          </div>
-          <button class="btn btnG" id="bsavetrip" onclick="saveTrip()" style="margin-top:8px">💾 Save Trip</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="row2">
-      <button class="btn btnS" id="bb2" onclick="goS(1)">Back</button>
-      <button class="btn btnP" id="bn2" onclick="next2()">Continue</button>
-    </div>
-  </div>
-
-  <!-- S3: TIMECARD -->
-  <div id="s3" style="display:none">
-    <div class="card">
-      <div class="ct" id="ts3">Timecard</div>
-      <div class="fg">
-        <span class="lbl" id="tws">Work Start</span>
-        <div class="mirow">
-          <input type="number" id="wsh" min="1" max="12" placeholder="8" oninput="calcH()">
-          <input type="number" id="wsm" min="0" max="59" placeholder="00" oninput="calcH()">
-        </div>
-        <div class="ampm">
-          <div class="ap on" id="wsam" onclick="setAP('ws','AM')">AM</div>
-          <div class="ap" id="wspm" onclick="setAP('ws','PM')">PM</div>
-        </div>
-      </div>
-      <div class="fg div">
-        <span class="lbl" id="twe">Work End</span>
-        <div class="mirow">
-          <input type="number" id="weh" min="1" max="12" placeholder="5" oninput="calcH()">
-          <input type="number" id="wem" min="0" max="59" placeholder="00" oninput="calcH()">
-        </div>
-        <div class="ampm">
-          <div class="ap" id="weam" onclick="setAP('we','AM')">AM</div>
-          <div class="ap on" id="wepm" onclick="setAP('we','PM')">PM</div>
-        </div>
-      </div>
-      <div class="tbox" style="margin-top:12px">
-        <span class="tl" id="ttoth">Total Hours</span>
-        <span class="tv" id="toth">—</span>
-      </div>
-      <div class="tbox" style="margin-top:6px">
-        <span class="tl" id="totl">Overtime</span>
-        <span class="tv" id="otv" style="color:#C0392B">—</span>
+      <div id="tripsarea" style="display:none;margin-top:12px">
+        <div id="twrap"></div>
+        <button class="addtrip" id="badd" onclick="addTrip()"><span style="font-size:20px">+</span><span id="tadd">Add Trip</span></button>
       </div>
     </div>
 
@@ -296,6 +158,60 @@ textarea:focus{outline:none;border-color:#1A3A6B}
       <div class="sf" id="sfov">
         <span class="lbl" id="tovcity">City / Location</span>
         <input type="text" id="ovcity" placeholder="e.g. Dallas, TX">
+      </div>
+    </div>
+
+    <div class="row2">
+      <button class="btn btnS" id="bb2" onclick="goS(1)">Back</button>
+      <button class="btn btnP" id="bn2" onclick="next2()">Continue</button>
+    </div>
+  </div>
+
+  <!-- S3 -->
+  <div id="s3" style="display:none">
+    <div class="card">
+      <div class="ct" id="ts3">Timecard</div>
+      <p style="font-size:14px;font-weight:600;margin-bottom:8px" id="twrkq">Did you work today?</p>
+      <div class="rg" id="rgwrk">
+        <label class="ro" onclick="selWork(this,'no')"><input type="radio" name="wrk"><span id="twrkno">Did not work</span></label>
+        <label class="ro" onclick="selWork(this,'yes')"><input type="radio" name="wrk"><span id="twrkyes">Yes</span></label>
+      </div>
+
+      <div id="workarea" style="display:none;margin-top:12px">
+        <div class="fg div">
+          <span class="lbl" id="tws">Work Start</span>
+          <div class="mirow">
+            <input type="number" id="wsh" min="1" max="12" placeholder="8" oninput="calcH()">
+            <input type="number" id="wsm" min="0" max="59" placeholder="00" oninput="calcH()">
+          </div>
+          <div class="ampm">
+            <div class="ap on" id="wsam" onclick="setAP('ws','AM')">AM</div>
+            <div class="ap" id="wspm" onclick="setAP('ws','PM')">PM</div>
+          </div>
+        </div>
+        <div class="fg div">
+          <span class="lbl" id="twe">Work End</span>
+          <div class="mirow">
+            <input type="number" id="weh" min="1" max="12" placeholder="5" oninput="calcH()">
+            <input type="number" id="wem" min="0" max="59" placeholder="00" oninput="calcH()">
+          </div>
+          <div class="ampm">
+            <div class="ap" id="weam" onclick="setAP('we','AM')">AM</div>
+            <div class="ap on" id="wepm" onclick="setAP('we','PM')">PM</div>
+          </div>
+        </div>
+        <div class="tbox" style="margin-top:12px">
+          <span class="tl" id="ttoth">Total Hours</span>
+          <span class="tv" id="toth">—</span>
+        </div>
+        <div class="tbox" style="margin-top:6px">
+          <span class="tl" id="totl">Overtime</span>
+          <span class="tv" id="otv" style="color:#C0392B">—</span>
+        </div>
+      </div>
+
+      <div id="noworkarea" style="display:none;margin-top:12px">
+        <div class="nowork"><p id="tnoworkmsg">Day off / Did not work</p></div>
       </div>
     </div>
 
@@ -372,9 +288,9 @@ textarea:focus{outline:none;border-color:#1A3A6B}
 </div>
 
 <script>
-var lang='en', ov='no', mode='', savedTrips=[], days=[], wsAP='AM', weAP='PM', SURL='https://script.google.com/macros/s/AKfycbzzBXVyNZ66DQ9CMs7sboPuKxyRZ_OEAFaTe1t7wJv5kxirHgjqpNFwZQS0RsUD-XJMOA/exec';
+var lang='en', ov='no', hasTrips='', worked='', tc=0, days=[], wsAP='AM', weAP='PM', weekOffset=0, selDayIdx='', SURL='https://script.google.com/macros/s/AKfycbzzBXVyNZ66DQ9CMs7sboPuKxyRZ_OEAFaTe1t7wJv5kxirHgjqpNFwZQS0RsUD-XJMOA/exec';
 
-var LOCS=['PO #02000 YARD','PO #21001 NEX','PO #22015 CAPEX','PO #22057 RIVERFRONT','PO #23005 DENTON I','PO #23026 SH 183','PO #23073 US 59 WEBB CO','PO #23083 SL 1604','PO #24047 IH 30 TARRANT','PO #24062 IH 35 WACO','PO #25025 COLORADO','PO #25036 LEWISVILLE DAM','PO #25042 DENTON II','PO #25043 Culberson','PO #25046 LIVE OAK','PO #25090 Indus-IH20','Other / Otro'];
+var LOCS=['PO #02000 YARD','PO #21001 NEX','PO #22015 CAPEX','PO #22034 GHC','PO #22057 RIVERFRONT','PO #23005 DENTON I','PO #23026 SH 183','PO #23029 NTI','PO #23073 US 59 WEBB CO','PO #23083 SL 1604','PO #24047 IH 30 TARRANT','PO #24062 IH 35 WACO','PO #25025 COLORADO','PO #25036 LEWISVILLE DAM','PO #25042 DENTON II','PO #25044 BASTROP','PO #25046 LIVE OAK','PO #25083 TRAIL TRAIL','Other / Otro'];
 var DSE=['Mon','Tue','Wed','Thu','Fri','Sat'];
 var DSS=['Lun','Mar','Mié','Jue','Vie','Sáb'];
 var DFE=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -383,39 +299,37 @@ var DFS=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 var T={
  en:{s1:'Identification',drv:'Driver',veh:'Vehicle',wk:'Week',dlbl:'Select Day',dph:'Select day...',dtlbl:'Date',
   d0:'Monday',d1:'Tuesday',d2:'Wednesday',d3:'Thursday',d4:'Friday',d5:'Saturday',
-  s2:'Trip Details',trpq:'What would you like to record?',
-  trpyes:'Trips + Timecard',trptc:'Services at Yard',trpdayoff:'Did not work',dayoffreason:'What was the reason?',
-  savedlbl:'Saved Trips',newtrip:'New Trip',
-  org:'Origin',dst:'Destination',lph:'Select location...',oth:'Specify location',
+  s2:'Trip Details',trpq:'Did you make any trips today?',trpno:'No',trpyes:'Yes',
+  add:'Add Trip',org:'Origin',dst:'Destination',lph:'Select location...',oth:'Specify location',
   cgo:'Cargo Type',mi:'Odometer (miles)',mis:'Start',mie:'End',mit:'Total',
-  savetrip:'💾 Save Trip',
   ovt:'Overnight Stay',ovq:'Did you stay overnight?',ovno:'No',ovyes:'Yes',ovc:'City / Location',
-  s3:'Timecard',ws:'Work Start',we:'Work End',toth:'Total Hours',ot:'Overtime',obs:'General Observations',
+  s3:'Timecard',wrkq:'Did you work today?',wrkno:'Did not work',wrkyes:'Yes',
+  noworkmsg:'Day off / Did not work',
+  ws:'Work Start',we:'Work End',toth:'Total Hours',ot:'Overtime',obs:'General Observations',
   bk:'Back',cnt:'Continue',sub:'Submit Day',snd:'Sending...',
   suct:'Day submitted!',subs:'Data saved.',vw:'View Week',nd:'New Day',
   tw:'This Week',th:'History',wko:'Week Overview',wkd:'Days This Week',
   wd:'Days',wm:'Miles',wh:'Hours',wt:'Trips',wo:'Overtime',wn:'Nights out',
-  nod:'No days yet.',ned:'New Day Entry',trip:'Trip',dayoff:'Day off',del:'Delete'},
+  nod:'No days yet.',ned:'New Day Entry',trip:'Trip',dayoff:'Day off'},
  es:{s1:'Identificación',drv:'Conductor',veh:'Vehículo',wk:'Semana',dlbl:'Seleccionar Día',dph:'Seleccionar día...',dtlbl:'Fecha',
   d0:'Lunes',d1:'Martes',d2:'Miércoles',d3:'Jueves',d4:'Viernes',d5:'Sábado',
-  s2:'Detalles del Viaje',trpq:'¿Qué deseas registrar?',
-  trpyes:'Viajes + Registro de Horas',trptc:'Servicios en Yard',trpdayoff:'No trabajé',dayoffreason:'¿Cuál fue el motivo?',
-  savedlbl:'Viajes Guardados',newtrip:'Nuevo Viaje',
-  org:'Origen',dst:'Destino',lph:'Seleccionar lugar...',oth:'Especificar lugar',
+  s2:'Detalles del Viaje',trpq:'¿Hiciste viajes hoy?',trpno:'No',trpyes:'Sí',
+  add:'Agregar Viaje',org:'Origen',dst:'Destino',lph:'Seleccionar lugar...',oth:'Especificar lugar',
   cgo:'Tipo de Carga',mi:'Odómetro (millas)',mis:'Inicio',mie:'Final',mit:'Total',
-  savetrip:'💾 Guardar Viaje',
   ovt:'Pernocta',ovq:'¿Pernoctaste fuera?',ovno:'No',ovyes:'Sí',ovc:'Ciudad / Lugar',
-  s3:'Registro de Horas',ws:'Hora de Entrada',we:'Hora de Salida',toth:'Total Horas',ot:'Horas Extra',obs:'Observaciones Generales',
+  s3:'Registro de Horas',wrkq:'¿Trabajaste hoy?',wrkno:'No trabajó',wrkyes:'Sí',
+  noworkmsg:'Día libre / No trabajó',
+  ws:'Hora de Entrada',we:'Hora de Salida',toth:'Total Horas',ot:'Horas Extra',obs:'Observaciones Generales',
   bk:'Atrás',cnt:'Continuar',sub:'Enviar Día',snd:'Enviando...',
   suct:'¡Día enviado!',subs:'Datos guardados.',vw:'Ver Semana',nd:'Nuevo Día',
   tw:'Esta Semana',th:'Historial',wko:'Resumen Semanal',wkd:'Días Esta Semana',
   wd:'Días',wm:'Millas',wh:'Horas',wt:'Viajes',wo:'Horas Extra',wn:'Noches fuera',
-  nod:'Sin días aún.',ned:'Nuevo Día',trip:'Viaje',dayoff:'Día libre',del:'Eliminar'}
+  nod:'Sin días aún.',ned:'Nuevo Día',trip:'Viaje',dayoff:'Día libre'}
 };
 
 function e(i){return document.getElementById(i);}
 function tx(i,v){var x=e(i);if(x)x.textContent=v;}
-function gv(i){var x=e(i);return x?x.value||'':''}
+function gv(i){var x=e(i);return x?x.value||'':'';}
 function pad(n){return String(n).padStart(2,'0');}
 
 function setLang(l,b){
@@ -429,91 +343,129 @@ function applyLang(){
   tx('ts1',t.s1);tx('tdrv',t.drv);tx('tveh',t.veh);tx('twk',t.wk);
   tx('tdaylbl',t.dlbl);tx('tdayph',t.dph);tx('tdtlbl',t.dtlbl);
   for(var i=0;i<6;i++) tx('td'+i,t['d'+i]);
-  tx('ts2',t.s2);tx('ttrpq',t.trpq);tx('ttrpyes',t.trpyes);tx('ttrptc',t.trptc);tx('ttrpdayoff',t.trpdayoff);tx('tdayoffreason',t.dayoffreason);
-  tx('tsavedlbl',t.savedlbl);tx('tnewtrip',t.newtrip);
-  tx('torg',t.org);tx('torgph',t.lph);tx('torgoth',t.oth);
-  tx('tdst',t.dst);tx('tdstph',t.lph);tx('tdstoth',t.oth);
-  tx('tcgo',t.cgo);tx('tmi',t.mi);tx('tmis',t.mis);tx('tmie',t.mie);tx('tmit',t.mit);
-  tx('bsavetrip',t.savetrip);
-  tx('ts3',t.s3);tx('tws',t.ws);tx('twe',t.we);tx('ttoth',t.toth);tx('totl',t.ot);tx('tobst',t.obs);
+  tx('ts2',t.s2);tx('ttrpq',t.trpq);tx('ttrpno',t.trpno);tx('ttrpyes',t.trpyes);tx('tadd',t.add);
   tx('tovt',t.ovt);tx('tovq',t.ovq);tx('tovno',t.ovno);tx('tovyes',t.ovyes);tx('tovcity',t.ovc);
+  tx('ts3',t.s3);tx('twrkq',t.wrkq);tx('twrkno',t.wrkno);tx('twrkyes',t.wrkyes);
+  tx('tnoworkmsg',t.noworkmsg);
+  tx('tws',t.ws);tx('twe',t.we);tx('ttoth',t.toth);tx('totl',t.ot);tx('tobst',t.obs);
   tx('bn1',t.cnt);tx('bb2',t.bk);tx('bn2',t.cnt);tx('bb3',t.bk);tx('bsub',t.sub);
   tx('tsuct',t.suct);tx('tsubs',t.subs);tx('tvw',t.vw);tx('tnd',t.nd);
   tx('ttabw',t.tw);tx('ttabh',t.th);tx('twkov',t.wko);tx('twkd',t.wkd);
   tx('wldays',t.wd);tx('wlmi',t.wm);tx('wlhrs',t.wh);tx('wltr',t.wt);tx('wlot',t.wo);tx('wlni',t.wn);
   tx('tnod',t.nod);tx('tnewday',t.ned);tx('tnewrec',t.ned);
+  document.querySelectorAll('.tc-lbl').forEach(function(x,i){x.textContent=t.trip+' '+(i+1);});
+  document.querySelectorAll('.lo-org').forEach(function(x){x.textContent=t.org;});
+  document.querySelectorAll('.lo-dst').forEach(function(x){x.textContent=t.dst;});
+  document.querySelectorAll('.lo-cgo').forEach(function(x){x.textContent=t.cgo;});
+  document.querySelectorAll('.lo-mi').forEach(function(x){x.textContent=t.mi;});
+  document.querySelectorAll('.lo-mis').forEach(function(x){x.textContent=t.mis;});
+  document.querySelectorAll('.lo-mie').forEach(function(x){x.textContent=t.mie;});
+  document.querySelectorAll('.lo-mit').forEach(function(x){x.textContent=t.mit;});
+  document.querySelectorAll('.lo-oth').forEach(function(x){x.textContent=t.oth;});
+  document.querySelectorAll('.lsel').forEach(function(s){if(s.options[0])s.options[0].textContent=t.lph;});
   updWk();
 }
 
-function getMon(){var d=new Date(),dow=d.getDay(),m=new Date(d);m.setDate(d.getDate()-(dow===0?6:dow-1));m.setHours(0,0,0,0);return m;}
-function getWkDates(){var m=getMon(),a=[];for(var i=0;i<6;i++){var d=new Date(m);d.setDate(m.getDate()+i);a.push(d);}return a;}
+function getMon(){
+  var d=new Date(),dow=d.getDay(),m=new Date(d);
+  m.setDate(d.getDate()-(dow===0?6:dow-1)+(weekOffset*7));m.setHours(0,0,0,0);return m;
+}
+function getWkDates(){
+  var m=getMon(),a=[];
+  for(var i=0;i<6;i++){var d=new Date(m);d.setDate(m.getDate()+i);a.push(d);}
+  return a;
+}
 function fd(d){return pad(d.getMonth()+1)+'/'+pad(d.getDate())+'/'+d.getFullYear();}
 function fs(d){return pad(d.getMonth()+1)+'/'+pad(d.getDate());}
 
-function updWk(){var w=getWkDates();var r=fs(w[0])+' – '+fs(w[5]);tx('wkr',r);tx('dwkr',r);}
+function updWk(){
+  var w=getWkDates();
+  var r=fs(w[0])+' – '+fs(w[5]);
+  tx('wkr',r);tx('dwkr',r);
+  renderDayBtns();
+}
+
+function changeWeek(dir){
+  weekOffset+=dir;
+  selDayIdx='';
+  e('daterow').style.display='none';
+  updWk();
+  renderDayBtns();
+}
+
+function renderDayBtns(){
+  var wd=getWkDates();
+  var ds=lang==='en'?DFE:DFS;
+  var dsShort=lang==='en'?DSE:DSS;
+  var h='';
+  wd.forEach(function(d,i){
+    var s=fd(d);
+    var sel=selDayIdx===String(i);
+    h+='<button onclick="onDaySelect('+i+')" style="padding:8px 4px;border-radius:8px;border:2px solid '+(sel?'#1A3A6B':'#dde3ee')+';background:'+(sel?'#1A3A6B':'#fff')+';color:'+(sel?'#fff':'#0d2545')+';font-size:12px;font-weight:700;cursor:pointer;text-align:center;line-height:1.4">';
+    h+='<div>'+dsShort[i]+'</div>';
+    h+='<div style="font-size:11px;font-weight:400;opacity:.8">'+fs(d)+'</div>';
+    h+='</button>';
+  });
+  var c=e('dayBtns');if(c)c.innerHTML=h;
+}
+
+function onDaySelect(idx){
+  selDayIdx=String(idx);
+  renderDayBtns();
+  var d=getWkDates()[idx];
+  tx('dtval',fs(d));
+  e('daterow').style.display='flex';
+}
 
 function onDayChange(){
   var sel=e('selDay'),row=e('daterow');
-  if(!sel.value){row.style.display='none';return;}
-  tx('dtval',fs(getWkDates()[parseInt(sel.value)]));
+  if(!sel||!sel.value){row.style.display='none';return;}
+  var d=getWkDates()[parseInt(sel.value)];
+  tx('dtval',fs(d));
   row.style.display='flex';
 }
 
-function chkOth(sel,sf){if(sf)sf.style.display=sel.value==='Other / Otro'?'block':'none';}
-function getLoc(selId,xId){var s=e(selId);if(!s)return'';return s.value==='Other / Otro'?(e(xId)?e(xId).value:''):s.value;}
+function locOpts(){
+  var t=T[lang];
+  return '<option value="">'+t.lph+'</option>'+LOCS.map(function(l){return '<option value="'+l+'">'+l+'</option>';}).join('');
+}
 
-function selMode(el,v){
-  mode=v;
+function selTrips(el,v){
+  hasTrips=v;
   document.querySelectorAll('#rgtrp .ro').forEach(function(o){o.classList.remove('on');});
   el.classList.add('on');el.querySelector('input').checked=true;
-  var showTrips=v==='trips';
-  var showDayOff=v==='dayoff';
-  e('trip-form-area').style.display=showTrips?'block':'none';
-  e('saved-trips-area').style.display=(showTrips&&savedTrips.length)?'block':'none';
-  e('dayoff-area').style.display=showDayOff?'block':'none';
+  e('tripsarea').style.display=v==='yes'?'block':'none';
+  if(v==='no'){e('twrap').innerHTML='';tc=0;}
 }
 
-function calcMi(){
-  var s=parseFloat(gv('mi-start'))||0, en=parseFloat(gv('mi-end'))||0;
-  tx('mi-total',(en>s?en-s:0).toFixed(0)+' mi');
+function addTrip(){
+  tc++;var n=tc,t=T[lang];
+  var d=document.createElement('div');
+  d.className='tc';d.id='tc'+n;
+  d.innerHTML=
+    '<div class="tc-lbl tcn">'+t.trip+' '+n+'</div>'+
+    '<button class="rmv" onclick="rmTrip('+n+')">&#10005;</button>'+
+    '<div class="fg"><span class="lbl lo-org">'+t.org+'</span>'+
+    '<select class="lsel" id="org'+n+'" onchange="chkOth(this,document.getElementById(&quot;sfo'+n+'&quot;))">'+locOpts()+'</select>'+
+    '<div class="sf" id="sfo'+n+'"><span class="lbl lo-oth">'+t.oth+'</span><input type="text" id="xo'+n+'" placeholder="..."></div></div>'+
+    '<div class="fg"><span class="lbl lo-dst">'+t.dst+'</span>'+
+    '<select class="lsel" id="dst'+n+'" onchange="chkOth(this,document.getElementById(&quot;sfd'+n+'&quot;))">'+locOpts()+'</select>'+
+    '<div class="sf" id="sfd'+n+'"><span class="lbl lo-oth">'+t.oth+'</span><input type="text" id="xd'+n+'" placeholder="..."></div></div>'+
+    '<div class="fg"><span class="lbl lo-cgo">'+t.cgo+'</span><input type="text" id="cg'+n+'" placeholder="e.g. Construction materials"></div>'+
+    '<div class="fg"><span class="lbl lo-mi">'+t.mi+'</span>'+
+    '<div class="mirow"><div><span class="lbl lo-mis" style="font-size:12px">'+t.mis+'</span><input type="number" id="ms'+n+'" placeholder="0" oninput="calcMi('+n+')"></div>'+
+    '<div><span class="lbl lo-mie" style="font-size:12px">'+t.mie+'</span><input type="number" id="me'+n+'" placeholder="0" oninput="calcMi('+n+')"></div></div>'+
+    '<div class="tbox"><span class="tl lo-mit">'+t.mit+'</span><span class="tv" id="mt'+n+'">0 mi</span></div></div>';
+  e('twrap').appendChild(d);
+}
+function rmTrip(n){
+  var x=e('tc'+n);if(x)x.remove();
+  document.querySelectorAll('.tc-lbl').forEach(function(x,i){x.textContent=T[lang].trip+' '+(i+1);});
 }
 
-function saveTrip(){
-  var org=getLoc('trip-org','x-org');
-  var dst=getLoc('trip-dst','x-dst');
-  if(!org||!dst){alert(lang==='en'?'Please select origin and destination.':'Selecciona origen y destino.');return;}
-  var s=parseFloat(gv('mi-start'))||0, en=parseFloat(gv('mi-end'))||0;
-  var trip={origin:org,destination:dst,cargo:gv('trip-cargo'),miStart:s,miEnd:en,totalMiles:en>s?en-s:0};
-  savedTrips.push(trip);
-  localStorage.setItem('driver_trips', JSON.stringify(savedTrips));
-  renderSavedTrips();
-  // Auto-fill next trip start with last end miles
-  e('trip-org').value='';e('trip-dst').value='';e('trip-cargo').value='';
-  e('sf-org').style.display='none';e('sf-dst').style.display='none';
-  e('x-org').value='';e('x-dst').value='';
-  e('mi-start').value=en>0?en:'';
-  e('mi-end').value='';
-  tx('mi-total','0 mi');
-  e('saved-trips-area').style.display='block';
-}
-
-function renderSavedTrips(){
-  var list=e('saved-trips-list');
-  tx('trips-count',savedTrips.length);
-  if(!savedTrips.length){list.innerHTML='';return;}
-  var html='';
-  savedTrips.forEach(function(t,i){
-    html+='<div class="saved-trip">';
-    html+='<div><div class="saved-trip-info">'+t.origin+' → '+t.destination+'</div>';
-    if(t.cargo)html+='<div style="font-size:12px;color:#888;margin-top:2px">'+t.cargo+'</div>';
-    html+='<div class="saved-trip-mi">'+t.totalMiles.toFixed(0)+' mi</div></div>';
-    html+='<button class="del-trip" onclick="delTrip('+i+')">&#10005;</button>';
-    html+='</div>';
-  });
-  list.innerHTML=html;
-}
-
-function delTrip(i){savedTrips.splice(i,1);localStorage.setItem('driver_trips',JSON.stringify(savedTrips));renderSavedTrips();if(!savedTrips.length)e('saved-trips-area').style.display='none';}
+function chkOth(sel,sf){if(!sf&&typeof arguments[1]==='string')sf=e(arguments[1]);if(sf)sf.style.display=sel.value==='Other / Otro'?'block':'none';}
+function getLoc(sId,xId){var s=e(sId);if(!s)return'';return s.value==='Other / Otro'?(e(xId)?e(xId).value:''):s.value;}
+function calcMi(n){var s=parseFloat(gv('ms'+n))||0,en=parseFloat(gv('me'+n))||0;var x=e('mt'+n);if(x)x.textContent=(en>s?en-s:0).toFixed(0)+' mi';}
 
 function selOv(el,v){
   ov=v;
@@ -522,8 +474,16 @@ function selOv(el,v){
   e('sfov').style.display=v==='yes'?'block':'none';
 }
 
+function selWork(el,v){
+  worked=v;
+  document.querySelectorAll('#rgwrk .ro').forEach(function(o){o.classList.remove('on');});
+  el.classList.add('on');el.querySelector('input').checked=true;
+  e('workarea').style.display=v==='yes'?'block':'none';
+  e('noworkarea').style.display=v==='no'?'block':'none';
+}
+
 function setAP(p,v){
-  if(p==='ws')wsAP=v;else weAP=v;
+  if(p==='ws')wsAP=v; else weAP=v;
   e('wsam').classList.toggle('on',wsAP==='AM');e('wspm').classList.toggle('on',wsAP==='PM');
   e('weam').classList.toggle('on',weAP==='AM');e('wepm').classList.toggle('on',weAP==='PM');
   calcH();
@@ -537,7 +497,7 @@ function toMin(h,m,ap){
 function calcH(){
   var sh=gv('wsh'),sm=gv('wsm'),eh=gv('weh'),em=gv('wem');
   if(!sh||!eh){tx('toth','—');tx('otv','—');return;}
-  var diff=toMin(eh,em,weAP)-toMin(sh,sm,wsAP);
+  var tot=toMin(sh,sm,wsAP),end=toMin(eh,em,weAP),diff=end-tot;
   if(diff<0)diff+=1440;
   tx('toth',Math.floor(diff/60)+'h '+pad(diff%60)+'m');
   var ot=Math.max(0,diff-480);
@@ -556,21 +516,29 @@ function goS(n){
 }
 
 function next1(){
-  if(!e('selDay').value){alert(lang==='en'?'Please select a day.':'Selecciona un día.');return;}
+  if(selDayIdx===''){alert(lang==='en'?'Please select a day.':'Selecciona un día.');return;}
   goS(2);
 }
-
 function next2(){
-  if(!mode){alert(lang==='en'?'Please select an option.':'Selecciona una opción.');return;}
-  if(mode==='dayoff'){
-    if(!gv('dayoff-reason').trim()){alert(lang==='en'?'Please describe the reason.':'Por favor describe el motivo.');return;}
-    submitDay();
-  } else {
-    goS(3);
-  }
+  if(!hasTrips){alert(lang==='en'?'Please answer the trip question.':'Por favor responde si hiciste viajes.');return;}
+  goS(3);
 }
 
-function p2m(s){if(!s||s==='—')return 0;var p=s.replace('m','').split('h ');return p.length===2?parseInt(p[0])*60+parseInt(p[1]):0;}
+function colTrips(){
+  var a=[];
+  document.querySelectorAll('.tc').forEach(function(x){
+    var n=x.id.replace('tc','');
+    var s=parseFloat(gv('ms'+n))||0,en=parseFloat(gv('me'+n))||0;
+    a.push({origin:getLoc('org'+n,'xo'+n),destination:getLoc('dst'+n,'xd'+n),cargo:gv('cg'+n),miStart:s,miEnd:en,totalMiles:en>s?en-s:0});
+  });
+  return a;
+}
+
+function p2m(s){
+  if(!s||s==='—')return 0;
+  var p=s.replace('m','').split('h ');
+  return p.length===2?parseInt(p[0])*60+parseInt(p[1]):0;
+}
 function m2s(m){return Math.floor(m/60)+'h '+pad(m%60)+'m';}
 
 function showPage(id){
@@ -580,40 +548,43 @@ function showPage(id){
 
 function submitDay(){
   var btn=e('bsub');
+  if(!worked){alert(lang==='en'?'Please answer if you worked today.':'Por favor indica si trabajaste hoy.');return;}
   btn.textContent=T[lang].snd;btn.disabled=true;
-  var idx=parseInt(e('selDay').value);
-  var wd=getWkDates();
-  var dFull=lang==='en'?DFE:DFS;
-  var totMi=savedTrips.reduce(function(a,t){return a+t.totalMiles;},0);
 
-  var isDayOff=mode==='dayoff';
-  var isYard=mode==='yardservice';
-  var yardTrip=isYard?[{origin:'Services at Yard',destination:'Services at Yard',cargo:'',miStart:0,miEnd:0,totalMiles:0}]:[];
-  var payload={
+  var idx=parseInt(selDayIdx);
+  var wd=getWkDates();
+  var trips=hasTrips==='yes'?colTrips():[];
+  var totMi=trips.reduce(function(a,t){return a+t.totalMiles;},0);
+  var dFull=lang==='en'?DFE:DFS;
+
+  var p={
     date:fd(wd[idx]),dayOfWeek:dFull[idx],weekOf:fd(wd[0]),
     driver:'Jaime Garcia',truck:'Ford F350',
-    mode:mode,trips:isDayOff?[]:isYard?yardTrip:savedTrips,totalMiles:isDayOff?0:totMi,
-    workStart:isDayOff?'0:00 AM':''+((gv('wsh')||'—')+':'+(gv('wsm')||'00')+' '+wsAP),
-    workEnd:isDayOff?'0:00 AM':''+((gv('weh')||'—')+':'+(gv('wem')||'00')+' '+weAP),
-    totalHours:isDayOff?'0h 00m':e('toth').textContent,
-    overtime:isDayOff?'0h 00m':e('otv').textContent,
-    overnight:isDayOff?'no':ov,overnightCity:(ov==='yes'&&!isDayOff)?gv('ovcity'):'',
-    generalObs:isDayOff?('Did not work. Reason: '+gv('dayoff-reason')):gv('genobs')
+    hasTrips:hasTrips,trips:trips,totalMiles:totMi,
+    worked:worked,
+    workStart:worked==='yes'?(gv('wsh')||'—')+':'+(gv('wsm')||'00')+' '+wsAP:'',
+    workEnd:worked==='yes'?(gv('weh')||'—')+':'+(gv('wem')||'00')+' '+weAP:'',
+    totalHours:worked==='yes'?e('toth').textContent:'',
+    overtime:worked==='yes'?e('otv').textContent:'',
+    overnight:ov,overnightCity:ov==='yes'?gv('ovcity'):'',
+    generalObs:gv('genobs')
   };
 
   if(SURL){
-    fetch(SURL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)})
+    fetch(SURL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(p)})
       .then(function(){}).catch(function(){})
       .finally(function(){btn.disabled=false;btn.textContent=T[lang].sub;});
-  }else{btn.disabled=false;btn.textContent=T[lang].sub;}
+  } else{btn.disabled=false;btn.textContent=T[lang].sub;}
 
-  days=days.filter(function(d){return d.date!==payload.date;});
-  days.push(payload);
-  localStorage.removeItem('driver_trips');
+  days=days.filter(function(d){return d.date!==p.date;});
+  days.push(p);
 
-  var sum=dFull[idx]+' · '+payload.totalHours;
-  if(savedTrips.length)sum+=' · '+savedTrips.length+' trip(s) · '+totMi.toFixed(0)+' mi';
-  if(ov==='yes')sum+=' · 🌙 '+payload.overnightCity;
+  var sum='';
+  if(worked==='no'){sum=T[lang].dayoff;}
+  else{
+    sum=dFull[idx]+' · '+totMi.toFixed(0)+' mi · '+p.totalHours;
+    if(ov==='yes')sum+=' · 🌙 '+p.overnightCity;
+  }
   tx('oksum',sum);
   renderAll();
   showPage('pOk');
@@ -622,19 +593,20 @@ function submitDay(){
 function showDash(){renderAll();showPage('pDash');}
 
 function newDay(){
-  ov='no';wsAP='AM';weAP='PM';mode='';savedTrips=[];localStorage.removeItem('driver_trips');
-  e('trip-form-area').style.display='none';
-  e('saved-trips-area').style.display='none';
-  e('dayoff-area').style.display='none';
-  e('saved-trips-list').innerHTML='';
-  e('selDay').value='';
+  ov='no';wsAP='AM';weAP='PM';tc=0;hasTrips='';worked='';selDayIdx='';
+  e('twrap').innerHTML='';
+  e('tripsarea').style.display='none';
+  e('workarea').style.display='none';
+  e('noworkarea').style.display='none';
+  e('selDay') && (e('selDay').value='');
   e('daterow').style.display='none';
-  ['wsh','wsm','weh','wem','ovcity','genobs','trip-org','trip-dst','trip-cargo','mi-start','mi-end','x-org','x-dst','dayoff-reason'].forEach(function(id){var x=e(id);if(x)x.value='';});
-  document.querySelectorAll('#rgov .ro,#rgtrp .ro').forEach(function(o){o.classList.remove('on');});
-  e('sfov').style.display='none';e('sf-org').style.display='none';e('sf-dst').style.display='none';
+  renderDayBtns();
+  ['wsh','wsm','weh','wem','ovcity','genobs'].forEach(function(id){var x=e(id);if(x)x.value='';});
+  document.querySelectorAll('#rgov .ro, #rgwrk .ro, #rgtrp .ro').forEach(function(o){o.classList.remove('on');});
+  e('sfov').style.display='none';
   e('wsam').classList.add('on');e('wspm').classList.remove('on');
   e('weam').classList.remove('on');e('wepm').classList.add('on');
-  tx('toth','—');tx('otv','—');tx('mi-total','0 mi');tx('trips-count','0');
+  tx('toth','—');tx('otv','—');
   goS(1);showPage('pForm');
 }
 
@@ -657,23 +629,29 @@ function renderAll(){
     var h='';
     wd.forEach(function(d,i){
       var s=fd(d),day=wkD.find(function(x){return x.date===s;}),isT=s===tStr;
-      var cls='dc'+(day?' done':'')+(isT?' today':'');
-      var mi=day&&day.totalMiles>0?day.totalMiles.toFixed(0)+'mi':'—';
+      var cls='dc';
+      if(day){cls+=day.worked==='no'?' off':' done';}
+      if(isT)cls+=' today';
+      var mi=day?(day.worked==='no'?'Off':day.totalMiles.toFixed(0)):'—';
       h+='<div class="'+cls+'"><div class="dcn">'+ds[i]+'</div><div class="dcm">'+mi+'</div></div>';
     });
     g.innerHTML=h;
   }
   updWk();
 
-  var totMi=wkD.reduce(function(a,d){return a+(d.totalMiles||0);},0);
-  var totMin=wkD.reduce(function(a,d){return a+p2m(d.totalHours);},0);
-  var totOT=wkD.reduce(function(a,d){return a+p2m(d.overtime);},0);
-  var totTr=wkD.reduce(function(a,d){return a+(d.trips?d.trips.length:0);},0);
+  var workedDays=wkD.filter(function(d){return d.worked==='yes';});
+  var totMi=workedDays.reduce(function(a,d){return a+(d.totalMiles||0);},0);
+  var totMin=workedDays.reduce(function(a,d){return a+p2m(d.totalHours);},0);
+  var totOT=workedDays.reduce(function(a,d){return a+p2m(d.overtime);},0);
+  var totTr=workedDays.reduce(function(a,d){return a+d.trips.length;},0);
   var nights=wkD.filter(function(d){return d.overnight==='yes';}).length;
 
-  tx('wdays',wkD.length);tx('wmi',totMi.toFixed(0));
-  tx('whrs',wkD.length?m2s(totMin):'—');
-  tx('wtr',totTr);tx('wot',totOT>0?m2s(totOT):'—');tx('wni',nights);
+  tx('wdays',wkD.length);
+  tx('wmi',totMi.toFixed(0));
+  tx('whrs',workedDays.length?m2s(totMin):'—');
+  tx('wtr',totTr);
+  tx('wot',totOT>0?m2s(totOT):'—');
+  tx('wni',nights);
 
   var wl=e('wklist');if(wl){
     if(!wkD.length){wl.innerHTML='<p style="color:#888;font-size:13px">'+T[lang].nod+'</p>';}
@@ -684,16 +662,23 @@ function renderAll(){
         h+='<div class="rec"><div style="display:flex;justify-content:space-between;margin-bottom:4px">';
         h+='<span style="font-weight:700;color:#1A3A6B">'+d.dayOfWeek+'</span>';
         h+='<span style="font-size:12px;color:#888">'+d.date+'</span></div>';
-        if(d.trips&&d.trips.length){
-          d.trips.forEach(function(t){h+='<div style="font-size:13px;color:#444;margin-bottom:2px">&#8226; '+t.origin+' &#8594; '+t.destination+' <span style="color:#888">('+t.totalMiles.toFixed(0)+' mi)</span></div>';});
+        if(d.worked==='no'){
+          h+='<span class="tg toff">'+T[lang].dayoff+'</span>';
+        } else {
+          if(d.trips.length){
+            d.trips.forEach(function(t){h+='<div style="font-size:13px;color:#444;margin-bottom:2px">&#8226; '+t.origin+' &#8594; '+t.destination+' <span style="color:#888">('+t.totalMiles.toFixed(0)+' mi)</span></div>';});
+          } else {
+            h+='<div style="font-size:13px;color:#888;margin-bottom:2px">'+T[lang].trpno+'</div>';
+          }
+          h+='<div style="display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:#888;margin-top:4px">';
+          h+='<span>&#128663; '+d.totalMiles.toFixed(0)+' mi</span>';
+          h+='<span>&#128336; '+d.workStart+' – '+d.workEnd+'</span>';
+          h+='<span>&#8987; '+d.totalHours+'</span>';
+          if(p2m(d.overtime)>0)h+='<span style="color:#C0392B">OT: '+d.overtime+'</span>';
+          if(d.overnight==='yes')h+='<span class="tg tn">&#127769; '+d.overnightCity+'</span>';
+          h+='</div>';
         }
-        h+='<div style="display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:#888;margin-top:4px">';
-        if(d.totalMiles>0)h+='<span>&#128663; '+d.totalMiles.toFixed(0)+' mi</span>';
-        h+='<span>&#128336; '+d.workStart+' – '+d.workEnd+'</span>';
-        h+='<span>&#8987; '+d.totalHours+'</span>';
-        if(p2m(d.overtime)>0)h+='<span style="color:#C0392B">OT: '+d.overtime+'</span>';
-        if(d.overnight==='yes')h+='<span class="tg tn">&#127769; '+d.overnightCity+'</span>';
-        h+='</div></div>';
+        h+='</div>';
       });
       wl.innerHTML=h;
     }
@@ -707,38 +692,20 @@ function renderAll(){
       h+='<div class="rec"><div style="display:flex;justify-content:space-between;margin-bottom:2px">';
       h+='<span style="font-weight:600">'+d.dayOfWeek+'</span>';
       h+='<span style="font-size:12px;color:#888">'+d.date+'</span></div>';
-      h+='<div style="font-size:12px;color:#888">';
-      if(d.totalMiles>0)h+='&#128663; '+d.totalMiles.toFixed(0)+' mi &nbsp;';
-      h+='&#8987; '+d.totalHours;
-      if(d.overnight==='yes')h+=' &nbsp;<span class="tg tn">&#127769; '+d.overnightCity+'</span>';
-      h+='</div></div>';
+      if(d.worked==='no'){h+='<span class="tg toff">'+T[lang].dayoff+'</span>';}
+      else{
+        h+='<div style="font-size:12px;color:#888">&#128663; '+d.totalMiles.toFixed(0)+' mi &nbsp;&#8987; '+d.totalHours;
+        if(d.overnight==='yes')h+=' &nbsp;<span class="tg tn">&#127769; '+d.overnightCity+'</span>';
+        h+='</div>';
+      }
+      h+='</div>';
     });
     hl.innerHTML=h;
   }
 }
 
 document.addEventListener('DOMContentLoaded',function(){
-  updWk();
-  // Load saved trips from localStorage
-  try {
-    var saved = localStorage.getItem('driver_trips');
-    if(saved) {
-      savedTrips = JSON.parse(saved);
-      if(savedTrips.length > 0) {
-        mode = 'trips';
-        // Select the trips radio button
-        var trpRadios = document.querySelectorAll('#rgtrp .ro');
-        if(trpRadios[0]) {
-          trpRadios[0].classList.add('on');
-          trpRadios[0].querySelector('input').checked = true;
-        }
-        e('trip-form-area').style.display = 'block';
-        e('saved-trips-area').style.display = 'block';
-        renderSavedTrips();
-      }
-    }
-  } catch(err) {}
-  setTimeout(function(){applyLang();},50);
+  updWk(); applyLang(); renderDayBtns();
 });
 </script>
 </body></html>
